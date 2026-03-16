@@ -1,9 +1,5 @@
-year = int(input("请输入年份"))
-
-if year%100!=0:
-    if year%4==0:
-        print(f"{year}是闰年")
-    else:
-        print(f"{year}不是闰年")
-else :
-    print(f"{year}是闰年")
+for i in range(1,10):
+    for j in range(1,i+1):
+        print(f"{i}*{j}={i*j}",end=" ")
+        if j==i:
+            print("\n")
