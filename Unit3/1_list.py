@@ -60,5 +60,5 @@ num_list1 = [1,3,5,7,9]
 num_list2 = [2,4,6,8,0]
 #解包，将列表这一类容器解开成一个一个独立的元素
 #使用*进行解包
-num_list = [*num_list1,num_list2]
+num_list = [*num_list1,*num_list2]
 #也可使用num_list=num_list1+num_list2

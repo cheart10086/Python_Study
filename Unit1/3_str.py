@@ -17,9 +17,11 @@ print(s4,s5)
 
 #字符串格式化.使用占位符
 name = "jam"
-age = 18
+age = 18.2
 pro = "cs"
-print("我的名字是%s，我今年%d，我的专业是%s\n " %(name,age,pro))
+print("我的名字是%s，我今年%f，我的专业是%s\n " %(name,age,pro))
 #通过f"内容{变量/表达式}替代"
-print(f"我的名字是{name}，我今年{age}，我的专业是{pro}")
+#可在{}中变量后使用“:”来修饰变量
+#age:.1f表示保留一位小数
+print(f"我的名字是{name}，我今年{age:.1f}，我的专业是{pro}")
 
