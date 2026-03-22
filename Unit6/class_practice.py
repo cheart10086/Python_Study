@@ -41,7 +41,7 @@
    5.2 输出格式同查询功能，每行一个学生
 """
 from unittest import case
-
+from pymysql import Connection
 
 class Student:
     def __init__(self, name, chinese, math, english):
@@ -131,22 +131,60 @@ class EduManagement(Student):
     def show_score(self):
         for s in self.student_list:
             print(f"{s}")
+    def running(self):
 
+        while True:
+            print("\t\t\t 教务系统 \t\t\t")
+            print("\t\t\t1.添加学生成绩")
+            print("\t\t\t2.删除学生成绩")
+            print("\t\t\t3.修改学生成绩")
+            print("\t\t\t4.查询学生成绩")
+            print("\t\t\t5.展示所有学生成绩")
+            a = int(input("请输入要使用的功能,输入0时跳出系统\n"))
+            match a:
+                case 1:
+                    self.add_student()
+                case 2:
+                    self.delete_score()
+                case 3:
+                    self.update()
+                case 4:
+                    self.find_score()
+                case 5:
+                    self.show_score()
+                case 0:
+                    break
 if __name__ == "__main__":
     edu = EduManagement()
+    #edu.running()
+    #实例化链接
+    conn = Connection(
+        host="localhost",
+        port=3306,
+        user="root",
+        password="123456",
+        autocommit=True,
+    )
 
-    while True:
-        print("\t\t\t 教务系统 \t\t\t")
-        print("\t\t\t1.添加学生成绩")
-        print("\t\t\t2.删除学生成绩")
-        print("\t\t\t3.修改学生成绩")
-        print("\t\t\t4.查询学生成绩")
-        print("\t\t\t5.展示所有学生成绩")
-        a = int(input("请输入要使用的功能,输入0时跳出系统\n"))
-        match a:
-            case 1: edu.add_student()
-            case 2: edu.delete_score()
-            case 3: edu.update()
-            case 4: edu.find_score()
-            case 5: edu.show_score()
-            case 0: break
+    #print(conn.get_server_info())
+    #获取游标对象，通过游标对象执行sql语句
+    cursor = conn.cursor()
+    #连接到数据库
+    #执行非查询性质的sql对象
+    conn.select_db("test")
+
+    #execute方法支持任意类型的sql操作
+    #cursor.execute("CREATE TABLE students (name VARCHAR(50),chinese int,math int,english int)")
+    cursor.execute("INSERT INTO students (name,chinese,math,english) VALUES ('张三',100,100,100)")
+
+
+    cursor.execute("select * from students")
+
+    #插入数据后，需要使用 连接对象.commit()确认插入数据
+    #在连接对象时，可以设置自动提交
+    #conn.commit()
+    # 得到一个查询返回值
+    results = cursor.fetchall()
+    print(results)
+    #关闭数据库
+    conn.close()
